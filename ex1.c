@@ -138,6 +138,20 @@ void medicament_prix(Medicament** medicaments, int taille) {
     printf("Le medicament le plus cher est : %s\n", medicaments[index_max]->nom);
 }
 
+void taux_vendu(Medicament** medicaments, int taille) {
+    int total_medicament;
+    int total_medicament_vendu;
+
+    for (int i = 0; i < taille; i++) {
+        total_medicament += medicaments[i]->nbr_vendu + medicaments[i]->stock;
+        total_medicament_vendu += medicaments[i]->nbr_vendu;
+    }
+
+    int taux = total_medicament_vendu * 100 / (total_medicament);
+
+    printf("Le pharmacien a vendu %d%% de ses medicaments\n", taux);
+}
+
 int main() {
     int taille = 5;
     Medicament** medicament = malloc(taille * sizeof(Medicament*));
@@ -173,6 +187,7 @@ int main() {
     afficher_medicament(medicament, taille);
     recherche_dichotomique(medicament, taille);
     medicament_prix(medicament, taille);
+    taux_vendu(medicament, taille);
     
     return 0;
 }
