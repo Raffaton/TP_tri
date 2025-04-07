@@ -124,6 +124,20 @@ void recherche_dichotomique(Medicament** medicaments, int taille) {
     }
 }
 
+void medicament_prix(Medicament** medicaments, int taille) {
+    int max_prix = 0;
+    int index_max = 0;
+    
+    for (int i = 0; i < taille; i++) {
+        if (medicaments[i]->prix > max_prix) {
+            max_prix = medicaments[i]->prix;
+            index_max = i;
+        }
+    }
+    
+    printf("Le medicament le plus cher est : %s\n", medicaments[index_max]->nom);
+}
+
 int main() {
     int taille = 5;
     Medicament** medicament = malloc(taille * sizeof(Medicament*));
@@ -158,6 +172,7 @@ int main() {
     tri_bulle(medicament, taille);
     afficher_medicament(medicament, taille);
     recherche_dichotomique(medicament, taille);
-
+    medicament_prix(medicament, taille);
+    
     return 0;
 }
