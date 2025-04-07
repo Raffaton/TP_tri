@@ -1,0 +1,1 @@
+ printf("Code : %d\n", medicament[i]->code_medicament);

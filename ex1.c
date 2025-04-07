@@ -85,35 +85,79 @@ void tri_bulle(Medicament* medicament[], int taille) {
 
 void afficher_medicament(Medicament* medicament[], int taille) {
     for (int i = 0; i < taille; i++) {
-        printf("Nom : %s", medicament[i]->nom);
+        printf("Medicament %d :\n", i + 1);
+        printf("Nom : %s\n", medicament[i]->nom);
         printf("Code : %d\n", medicament[i]->code_medicament);
         printf("Date de fabrication : %d\n", medicament[i]->date_fabrication);
         printf("Prix : %d\n", medicament[i]->prix);
         printf("Nombre vendu : %d\n", medicament[i]->nbr_vendu);
-        printf("Stock : %d\n", medicament[i]->stock);
+        printf("Stock : %d\n\n", medicament[i]->stock);
+    }
+}
+
+void recherche_dichotomique(Medicament** medicaments, int taille) {
+    int debut = 0;
+    int fin = taille - 1;
+    int trouve = 0;
+    int mil;
+    
+    while (!trouve && debut <= fin) {
+        mil = (debut + fin) / 2;
+
+        int resultat_comparaison = strcmp(medicaments[mil]->nom, "paracetamol");
+        
+        if (resultat_comparaison == 0) {
+            trouve = 1;
+        } else {
+            if (resultat_comparaison < 0) {
+                debut = mil + 1;
+            } else {
+                fin = mil - 1;
+            }
+        }
+    }
+    
+    if (trouve) {
+        printf("Le paracetamol est le %deme medicament de la liste\n", mil + 1);
+    } else {
+        printf("Le paracetamol n'est pas dans le tableau\n");
     }
 }
 
 int main() {
-    int taille = 3;
+    int taille = 5;
     Medicament** medicament = malloc(taille * sizeof(Medicament*));
     if (medicament == NULL) {
         printf("Erreur d'allocation de memoire pour le tableau\n");
         return 0;
     }
 
-    for (int i = 0; i < taille; i++)
-    {
+    // for (int i = 0; i < taille; i++)
+    // {
+    //     medicament[i] = malloc(sizeof(Medicament));
+    //     if (medicament[i] == NULL) {
+    //         printf("Erreur d'allocation de memoire pour un medicament\n");
+    //         return 0;
+    //     }
+    //     initialiser_medicament(medicament[i], i);
+    // }
+
+    Medicament medicaments_init[] = {
+        {"ibuprofene", 1, 20012025, 700, 90, 60},
+        {"amoxicilline", 2, 10032018, 1200, 45, 100},
+        {"aspirine", 3, 15043000, 450, 200, 150},
+        {"paracetamol", 4, 30122026, 500, 120, 80},
+        {"omeprazole", 5, 20122225, 850, 75, 120}
+    };
+
+    for (int i = 0; i < taille; i++) {
         medicament[i] = malloc(sizeof(Medicament));
-        if (medicament[i] == NULL) {
-            printf("Erreur d'allocation de memoire pour un medicament\n");
-            return 0;
-        }
-        initialiser_medicament(medicament[i], i);
+        *medicament[i] = medicaments_init[i];
     }
 
     tri_bulle(medicament, taille);
     afficher_medicament(medicament, taille);
+    recherche_dichotomique(medicament, taille);
 
     return 0;
 }
