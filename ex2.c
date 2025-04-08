@@ -50,6 +50,24 @@ void quickSort(Etudiant etudiants[], int low, int high) {
     }
 }
 
+void tri_insertion(Etudiant etudiants[], int taille) {
+    int i, j;
+    Etudiant cle;
+
+    for (i = 1; i < taille; i++) {
+        cle = etudiants[i];
+        j = i - 1;
+
+        while (j >= 0 && strcmp(etudiants[j].nom, cle.nom) > 0) {
+            etudiants[j + 1] = etudiants[j];
+            j--;
+        }
+
+        etudiants[j + 1] = cle;
+    }
+}
+
+
 int main() {
     Etudiant etudiants[20] = {
         {"Durand", "Alice", "MAT1001", 14.5},
@@ -82,6 +100,11 @@ int main() {
     quickSort(etudiants, 0, n - 1);
 
     printf("Etudiants apres tri par moyenne :\n");
+    printEtudiants(etudiants, n);
+
+    tri_insertion(etudiants, n);
+
+    printf("Etudiants apres tri par ordre alphabetique :\n");
     printEtudiants(etudiants, n);
 
     return 0;
